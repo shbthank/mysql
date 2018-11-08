@@ -1,0 +1,167 @@
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+	
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>MySQL -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 24
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases; Database           |
++--------------------+
+| first-schema       |
+| huwang100          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| story              |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use huwang100;
+Database changed
+mysql> create table gouwuche(
+    -> id int(10) primary key not null auto_increment,price varchar(20) not null,amount varchar(3) not null);
+ERROR 1050 (42S01): Table 'gouwuche' already exists
+mysql> create table haochide(
+    -> id int(10) primary key not null auto_increment,name int(3) not null,price varchar(20) not null,amount varchar(3) not null);
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> desc haochede;
+ERROR 1146 (42S02): Table 'huwang100.haochede' doesn't exist
+mysql> desc haochide;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(10)     | NO   | PRI | NULL    | auto_increment |
+| name   | int(3)      | NO   |     | NULL    |                |
+| price  | varchar(20) | NO   |     | NULL    |                |
+| amount | varchar(3)  | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+4 rows in set (0.00 sec)
+
+mysql> alter table gouwuche add love varchar(10) not null;
+ERROR 1060 (42S21): Duplicate column name 'love'
+mysql> alter table haochide add love varchar(10) not null;
+Query OK, 0 rows affected (0.35 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table discount add love varchar(10) not null;
+ERROR 1146 (42S02): Table 'huwang100.discount' doesn't exist
+mysql> alter table gouwuche add discount varchar(10) not null;
+Query OK, 0 rows affected (0.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table haochide add hopping varchar(10) not null;
+Query OK, 0 rows affected (0.61 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table haochide add discount varchar(10) not null;
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc haochide;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(10)     | NO   | PRI | NULL    | auto_increment |
+| name     | int(3)      | NO   |     | NULL    |                |
+| price    | varchar(20) | NO   |     | NULL    |                |
+| amount   | varchar(3)  | NO   |     | NULL    |                |
+| love     | varchar(10) | NO   |     | NULL    |                |
+| hopping  | varchar(10) | NO   |     | NULL    |                |
+| discount | varchar(10) | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+ rows in set (0.14 sec)
+
+mysql> inter into haochide(id,name,price,amount,love,hopping,discount)values('1','haibo','100','100','shose',' ',' ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inter into haochide(id,name,price,amount,love,hopping,discount)values('1','haibo' at line 1
+mysql> inter into haochide(id,name,price,amount,love,hopping,discount)values('1','haibo','100','100','shose','A','C');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inter into haochide(id,name,price,amount,love,hopping,discount)values('1','haibo' at line 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values('1','haibo','100','100','shose','A','C');
+ERROR 1366 (HY000): Incorrect integer value: 'haibo' for column 'name' at row 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,'haibo','100','100','shose','A','C');
+ERROR 1366 (HY000): Incorrect integer value: 'haibo' for column 'name' at row 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,hai,'100','100','shose','A','C');
+ERROR 1054 (42S22): Unknown column 'hai' in 'field list'
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,'haibo','100','100','shose','A','C');
+ERROR 1366 (HY000): Incorrect integer value: 'haibo' for column 'name' at row 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,'hai','100','100','shose','A','C');
+ERROR 1366 (HY000): Incorrect integer value: 'hai' for column 'name' at row 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,'hai',100,'100','shose','A','C');
+ERROR 1366 (HY000): Incorrect integer value: 'hai' for column 'name' at row 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,hai,'100','100','shose','A','C');
+ERROR 1054 (42S22): Unknown column 'hai' in 'field list'
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,h,'100','100','shose','A','C');
+ERROR 1054 (42S22): Unknown column 'h' in 'field list'
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,6,'100','100','shose','A','C');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from haochide; ----+------+-------+--------+-------+---------+----------+
+| id | name | price | amount | love  | hopping | discount |
++----+------+-------+--------+-------+---------+----------+
+|  1 |    6 | 100   | 100    | shose | A       | C        |
++----+------+-------+--------+-------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into haodechi(name,price,amount,love,hopping,discount)values(;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into haochide(id,name,price,amount,love,hopping,discount)values(1,hai,'100','100','shose','A','C');
+ERROR 1054 (42S22): Unknown column 'hai' in 'field list'mysql> insert into haochide(name,price,amount,love,hopping,discount)values(5,'20','8','food','A','C'),(7,'30','9','close','A','C');
+Query OK, 2 rows affected (0.19 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from haochede;
+ERROR 1146 (42S02): Table 'huwang100.haochede' doesn't exist
+mysql> select * from haochide;
++----+------+-------+--------+-------+---------+----------+
+| id | name | price | amount | love  | hopping | discount |
++----+------+-------+--------+-------+---------+----------+
+|  1 |    6 | 100   | 100    | shose | A       | C        |
+|  2 |    5 | 20    | 8      | food  | A       | C        |
+|  3 |    7 | 30    | 9      | close | A       | C        |
++----+------+-------+--------+-------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update haochide set hopping="7"where id=2;
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update haochide set hopping="B"where id=2;
+Query OK, 1 row affected (0.21 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from haochide;
++----+------+-------+--------+-------+---------+----------+
+| id | name | price | amount | love  | hopping | discount |
++----+------+-------+--------+-------+---------+----------+
+|  1 |    6 | 100   | 100    | shose | A       | C        |
+|  2 |    5 | 20    | 8      | food  | B       | C        |
+|  3 |    7 | 30    | 9      | close | A       | C        |
++----+------+-------+--------+-------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from haichide where id=3;
+ERROR 1146 (42S02): Table 'huwang100.haichide' doesn't exist
+mysql> delete from haochide where id=3;
+Query OK, 1 row affected (0.20 sec)
+
+mysql> select * from haochide;
++----+------+-------+--------+-------+---------+----------+
+| id | name | price | amount | love  | hopping | discount |
++----+------+-------+--------+-------+---------+----------+
+|  1 |    6 | 100   | 100    | shose | A       | C        |
+|  2 |    5 | 20    | 8      | food  | B       | C        |
++----+------+-------+--------+-------+---------+----------+
+2 rows in set (0.00 sec)
