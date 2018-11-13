@@ -1,0 +1,155 @@
+C:\WINDOWS\system32>MySQL -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases£»
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databases£»' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| first-schema       |
+| huwang100          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| story              |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use sys;
+Database changed
+mysql> create table cl(id int,name varchar(20),price int(10));
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> desc cl;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| price | int(10)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cl(id,name,price)values(1,'yifu',200);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> select * from cl;
++------+------+-------+
+| id   | name | price |
++------+------+-------+
+|    1 | yifu |   200 |
++------+------+-------+
+1 row in set (0.00 sec)
+mysql> alter table cl modify price int zerofill;
+Query OK, 1 row affected (0.83 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> select * from cl;
++------+------+------------+
+| id   | name | price      |
++------+------+------------+
+|    1 | yifu | 0000000200 |
++------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table cl add num int(20);
+Query OK, 0 rows affected (0.54 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table cl add product varchar(20);
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc cl;
++---------+---------------------------+------+-----+---------+-------+
+| Field   | Type                      | Null | Key | Default | Extra |
++---------+---------------------------+------+-----+---------+-------+
+| id      | int(11)                   | YES  |     | NULL    |       |
+| name    | varchar(20)               | YES  |     | NULL    |       |
+| price   | int(10) unsigned zerofill | YES  |     | NULL    |       |
+| num     | int(20)                   | YES  |     | NULL    |       |
+| product | varchar(20)               | YES  |     | NULL    |       |
++---------+---------------------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from cl;
++------+------+------------+------+---------+
+| id   | name | price      | num  | product |
++------+------+------------+------+---------+
+|    1 | yifu | 0000000200 | NULL | NULL    |
++------+------+------------+------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into cl(id,name,price,num,product)values(1,'yifu',100,2,'skirt');
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into cl(id,name,price,num,product)values(1,'pants',210,5,'trous');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from cl;
++------+-------+------------+------+---------+
+| id   | name  | price      | num  | product |
++------+-------+------------+------+---------+
+|    1 | yifu  | 0000000200 | NULL | NULL    |
+|    1 | yifu  | 0000000100 |    2 | skirt   |
+|    1 | pants | 0000000210 |    5 | trous   |
++------+-------+------------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> update cl set product="trous" where id=1;
+Query OK, 2 rows affected (0.20 sec)
+Rows matched: 3  Changed: 2  Warnings: 0
+
+mysql> select * from cl;
++------+-------+------------+------+---------+
+| id   | name  | price      | num  | product |
++------+-------+------------+------+---------+
+|    1 | yifu  | 0000000200 | NULL | trous   |
+|    1 | yifu  | 0000000100 |    2 | trous   |
+|    1 | pants | 0000000210 |    5 | trous   |
++------+-------+------------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table cl add isdelete int(1) default 0;
+Query OK, 0 rows affected (0.34 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from cl;
++------+-------+------------+------+---------+----------+
+| id   | name  | price      | num  | product | isdelete |
++------+-------+------------+------+---------+----------+
+|    1 | yifu  | 0000000200 | NULL | trous   |        0 |
+|    1 | yifu  | 0000000100 |    2 | trous   |        0 |
+|    1 | pants | 0000000210 |    5 | trous   |        0 |
++------+-------+------------+------+---------+----------+
+3 rows in set (0.01 sec)
+
+mysql> update cl set isdelete=1 where id=1;
+Query OK, 3 rows affected (0.23 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from cl;
++------+-------+------------+------+---------+----------+
+| id   | name  | price      | num  | product | isdelete |
++------+-------+------------+------+---------+----------+
+|    1 | yifu  | 0000000200 | NULL | trous   |        1 |
+|    1 | yifu  | 0000000100 |    2 | trous   |        1 |
+|    1 | pants | 0000000210 |    5 | trous   |        1 |
++------+-------+------------+------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
